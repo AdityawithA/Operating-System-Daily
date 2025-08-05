@@ -1,0 +1,9 @@
+//Write a shell script to print your name, roll no.,deparment.
+
+name = "XYZ"
+dept = "abc"
+roll = "123"
+
+echo "Name: $name"
+echo "Department: $dept"
+echo "Roll No: $roll"
