@@ -1,0 +1,28 @@
+//Write a program to take input from user and swap two number using temporary variable and without temporary variable.
+
+read "Enter the first number(a):" a
+read "Enter the second number(b):" b
+
+echo ""
+echo "before swapping:"
+echo "a = $a"
+echo "b = $b"
+
+temp = $a
+a = $b
+b + $temp
+echo ""
+echo "After swapping using temporary variable:"
+
+echo "a = $a"
+echo "b = $b"
+
+a = $((a+b))
+b = $((a-b))
+a = $((a-b))
+
+echo ""
+echo "Swapping again without temporary variable:"
+
+echo "a = $a"
+echo "b = $b"
