@@ -1,0 +1,12 @@
+//Write a shell script program to check whether two no. A & B are equal(A=B), greater than (A>B), smaller than (A<B) each other.
+
+read -p "Enter number A:" a
+read -p "Enter number b:" b
+
+if [ "$a" -eq "$b" ];then
+echo "A=B"
+elif [ "$a" -gt "$b" ];then
+echo "A>B"
+else
+echo "A<B"
+fi
