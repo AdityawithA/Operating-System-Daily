@@ -1,0 +1,21 @@
+//Write a shell program to print the sum of the digits and also print the digits.
+
+read -p "Enter a number:" num
+sum = 0
+str_num ="$num"
+
+position = ("First" "Second" "Third" "Fourth" "Fifth")
+echo ""
+
+for "i=0; i<${#str_num}; i++""
+do
+digits = $str{str_num = $i:1}
+if! [["$digit" = [0-9]]];then
+continue
+fi
+
+echo "${position[i]}digit: $digit"
+sum = $((sum + digits))
+done
+echo""
+echo "Sum of digits:$sum"
