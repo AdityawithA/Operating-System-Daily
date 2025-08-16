@@ -1,0 +1,8 @@
+//Write a shell program to print from 1 to 10 using while loop.
+
+i = 1
+while [ $i -le 10 ]
+do
+echo "$i"
+i = $((I=1))
+done
