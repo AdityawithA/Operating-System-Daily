@@ -1,0 +1,6 @@
+//Write a shell program to print the following using for loop 2,4,6,8,10.
+
+for i in {2,4,6,8,10}
+do
+        echo $i
+done
