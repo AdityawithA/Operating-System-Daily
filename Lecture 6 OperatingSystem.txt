@@ -1,0 +1,82 @@
+What Happens When You Turn on Your Computer?
+===========================================
+
+1. PC On
+- When you press the power button, electricity flows into the motherboard, CPU, RAM, and other hardware.
+- The CPU starts executing instructions, but it needs a starting program → BIOS/UEFI.
+
+2. CPU initializes itself and looks for firmware (BIOS/UEFI)
+- BIOS (Basic Input/Output System):
+  * Stored in a ROM chip on the motherboard.
+  * Provides low-level instructions to check hardware and start the boot process.
+  * Lets you access BIOS setup menus.
+- UEFI (Unified Extensible Firmware Interface):
+  * Modern replacement for BIOS with more advanced features (faster boot, larger disk support, secure boot).
+- CPU fetches the first instruction pointing to BIOS/UEFI.
+
+3. CPU runs BIOS (POST Process)
+- POST (Power-On Self-Test):
+  * BIOS/UEFI checks hardware (CPU, RAM, devices).
+  * If critical hardware is missing, system cannot boot (error/beep codes).
+- Loads configuration settings from CMOS/UEFI setup.
+- UEFI is more advanced; like a mini-OS. Example: Intel Management Engine supports remote management.
+
+4. BIOS hands control to Bootloader
+- BIOS/UEFI looks for a bootable device (HDD, SSD, USB).
+- Two cases:
+  * MBR (Master Boot Record): Old system, first sector of disk stores bootloader and partition info.
+  * EFI Partition: Modern system, stores bootloader (.efi files).
+
+5. Bootloader takes over
+- Bootloader bridges BIOS/UEFI and the OS kernel.
+- Loads kernel into memory and starts execution.
+- Examples:
+  * Windows: Windows Boot Manager (Bootmgr.exe)
+  * Linux: GRUB (GRand Unified Bootloader)
+  * MacOS: boot.efi
+
+6. Kernel Loads
+- Kernel initializes memory, drivers, process management, and system resources.
+
+7. User Space Loads
+- Login screen or Desktop environment starts.
+- You can now interact with your computer.
+
+Summary of Boot Sequence
+------------------------
+1. Power On → Electricity flows, CPU starts.
+2. BIOS/UEFI Loads → Firmware initializes hardware.
+3. POST → Hardware test.
+4. BIOS/UEFI Hands Control → Boot device search (MBR/EFI).
+5. Bootloader Runs → Loads Kernel into memory.
+6. Kernel Loads → Initializes OS components.
+7. User Space → Login/Desktop/Apps.
+
+
+Booting Process Flowchart (Text Representation)
+===============================================
+
+[ PC Power On ]
+        |
+        v
+[ CPU fetches BIOS/UEFI ]
+        |
+        v
+[ POST - Power On Self Test ]
+(Hardware check: RAM, CPU, devices)
+        |
+        v
+[ BIOS/UEFI looks for Boot Device ]
+(MBR or EFI partition)
+        |
+        v
+[ Bootloader runs ]
+(Loads Kernel into memory)
+        |
+        v
+[ Kernel initializes ]
+(Drivers, memory, processes)
+        |
+        v
+[ User Space loads ]
+(Login, Desktop, Apps)
