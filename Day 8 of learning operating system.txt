@@ -1,0 +1,137 @@
+//Day 8 of learning operating system
+
+What are the different memory present in the computer system?
+
+               Register
+                  │
+                  ▼
+                 Cache
+                  │
+                  ▼
+             Main Memory
+        <---- Primary Memory ---->
+                  │
+                  ▼
+           Electronic Disk
+                  │
+                  ▼
+           Magnetic Disk
+                  │
+                  ▼
+            Optical Disk
+                  │
+                  ▼
+           Magnetic Tapes
+        <--- Secondary Memory --->
+1. Register
+
+Registers are the smallest and fastest type of memory in a computer.
+
+They are located inside the CPU itself and directly interact with the processor.
+
+Each register may hold:
+
+An instruction (part of a program being executed),
+
+A storage address (location of data in memory),
+
+Or actual data (bit sequences, characters, small numbers, etc.).
+
+Since registers are so close to the CPU, they enable extremely fast storage, retrieval, and execution of data.
+
+They are used for temporary storage during instruction execution, arithmetic calculations, and logical operations.
+
+Examples: Accumulator Register, Instruction Register, Program Counter, Stack Pointer.
+
+2. Cache Memory
+
+Cache is a high-speed memory system located between the CPU and the main memory (RAM).
+
+It stores frequently used instructions and data, so the CPU doesn’t need to repeatedly access the slower main memory.
+
+Cache improves the processing speed of the system because fetching from cache is much faster than RAM.
+
+Cache is divided into levels:
+
+L1 Cache: Smallest, fastest, located inside the CPU core.
+
+L2 Cache: Larger, slightly slower, may be on the CPU or separate chip.
+
+L3 Cache: Even larger, shared among multiple CPU cores.
+
+3. Main Memory (Primary Memory – RAM)
+
+Main memory refers to Random Access Memory (RAM).
+
+It stores data and instructions currently in use by the CPU.
+
+It is volatile memory, meaning its contents are lost when the power is turned off.
+
+RAM is faster than secondary memory but slower than cache or registers.
+
+It plays a central role in ensuring smooth multitasking and program execution.
+
+4. Secondary Memory
+
+Secondary memory refers to non-volatile storage devices where data and programs are permanently stored.
+
+Examples: Hard Disk Drives (HDD), Solid State Drives (SSD), CDs, DVDs, Pen Drives.
+
+Secondary storage has much larger capacity compared to primary storage.
+
+It is slower than registers, cache, and RAM but cheaper in cost per gigabyte.
+
+🔄 Comparison of Primary and Secondary Storage
+1. Cost
+
+Primary storage (registers, cache, RAM) is expensive because it requires high-speed semiconductor technology.
+
+Registers are the most expensive since they are made of advanced, high-performance transistors and require complex circuitry inside the CPU.
+
+Secondary storage is much cheaper because it uses magnetic or flash memory, which is less costly to manufacture.
+
+2. Access Speed
+
+Primary storage has a much higher access speed than secondary memory.
+
+Within primary memory hierarchy:
+
+Registers are the fastest.
+
+Then comes cache memory.
+
+Then main memory (RAM).
+
+Secondary storage (HDD/SSD) is significantly slower compared to RAM or cache, though SSDs are faster than HDDs.
+
+3. Storage Size
+
+Secondary memory provides much larger storage capacity compared to primary memory.
+
+Example:
+
+Registers → only a few bytes.
+
+Cache → a few MBs.
+
+RAM → a few GBs (e.g., 4 GB, 16 GB).
+
+Secondary storage → hundreds of GBs to several TBs.
+
+4. Volatility
+
+Primary memory is volatile, meaning data is lost when power is switched off.
+
+Registers, cache, and RAM all lose data without electricity.
+
+Secondary memory is non-volatile, meaning it permanently stores data and programs even when the computer is shut down.
+
+📌 Summary (Hierarchy of Computer Memory – from Fastest to Slowest)
+
+Registers → Fastest, smallest, most expensive, inside CPU.
+
+Cache → Very fast, stores frequently used data, located close to CPU.
+
+Main Memory (RAM) → Medium speed, stores active programs and data.
+
+Secondary Memory → Slowest but largest capacity, permanent storage.
