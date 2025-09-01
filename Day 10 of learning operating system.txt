@@ -1,0 +1,86 @@
+//Day 10 of learning operating system
+
+1. Process States: As process executes, it changes state. Each process may be in one of the following
+states.
+a. New: OS is about to pick the program & convert it into process. OR the process is being
+created.
+b. Run: Instructions are being executed; CPU is allocated.
+c. Waiting: Waiting for IO.
+d. Ready: The process is in memory, waiting to be assigned to a processor.
+e. Terminated: The process has finished execution. PCB entry removed from process table.
+
+           +-------------------+
+           |                   |
+           |     New           |
+           |                   |
+           +---------+---------+
+                     |
+                     v
+           +---------+---------+
+           |                   |
+           |     Ready         |
+           |                   |
+           +---------+---------+
+                     |
+                     v
+           +---------+---------+
+           |                   |
+           |    Running        |
+           |                   |
+   +-------+---------+---------+-------+
+   |                 |                 |
+   v                 v                 v
++--+--+         +----+----+        +---+---+
+|     |         |         |        |       |
+|Exit |         | Waiting |        | Ready |
+|     |         | (I/O)   |        | (Pre- |
++-----+         +----+----+        |empted)|
+                   |               +-------+
+                   v
+             +-----+-----+
+             |           |
+             |   Ready   |
+             |           |
+             +-----------+
+2. Process Queues:
+
+A process queue is a collection of processes waiting in a specific state (new, ready, or waiting) managed by the operating system.
+
+a. Job Queue:
+i. Processes in new state.
+ii. Present in secondary memory.
+iii. Job Schedular (Long term schedular (LTS)) picks process from the pool and
+loads them into memory for execution.
+
+b. Ready Queue:
+i. Processes in Ready state.
+ii. Present in main memory.
+iii. CPU Schedular (Short-term schedular) picks process from ready queue and
+dispatch it to CPU.
+
+c. Waiting Queue:
+i. Processes in Wait state.
+
+A Long-Term Scheduler (LTS) is the scheduler that selects processes from the job queue (in secondary storage) and loads them into main memory for execution.
+
+It is called long-term because it makes scheduling decisions less frequently (compared to short-term schedulers) and controls the degree of multiprogramming in the system.
+
+The Job Scheduler is called the Long-Term Scheduler because it works at a longer time interval — it decides which jobs (processes) from the job pool in secondary storage should be admitted into main memory for execution.
+
+It is "long-term" since its decisions are less frequent (compared to CPU scheduling), and it controls the degree of multiprogramming over a long duration, balancing I/O-bound and CPU-bound processes.
+
+A Short-Term Scheduler (STS) is the scheduler that selects a process from the ready queue in main memory and allocates the CPU to it.
+
+It is called short-term because it makes scheduling decisions very frequently (in milliseconds) to ensure smooth CPU utilization and fast process switching.
+
+CPU scheduling is called Short-Term Scheduling because it selects which process from the ready queue in main memory will get the CPU next, and these decisions happen very frequently (in milliseconds).
+
+It is called short-term since it operates over short intervals of time, making rapid and frequent scheduling decisions to keep the CPU busy and ensure efficient process execution.
+
+
+The degree of multiprogramming is defined as the number of processes that are present in main memory and can compete for CPU execution at the same time.
+The degree of multiprogramming is controlled by the Long-Term Scheduler (Job Scheduler).
+
+👉 It decides how many processes should be admitted into the system (main memory) from the job pool, thereby directly controlling the degree of multiprogramming.
+
+A dispatcher is a program module in the operating system that gives control of the CPU to the process selected by the short-term scheduler, by performing context switching, switching to user mode, and jumping to the proper program location to restart execution.
