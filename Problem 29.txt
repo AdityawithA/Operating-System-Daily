@@ -1,0 +1,70 @@
+# Write a C program to implement priority scheduling in preemptive way where take arrival time, burst time, priority, process id from user.
+
+#include <stdio.h>
+
+struct Process {
+    int id, at, bt, bt_left, priority, wt, tat, ct;
+};
+
+int main() {
+    int n, completed = 0, time = 0, min_priority, idx;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    struct Process p[n];
+    for(int i=0;i<n;i++){
+        printf("Enter Process ID: ");
+        scanf("%d", &p[i].id);
+        printf("Enter Arrival Time of P%d: ", p[i].id);
+        scanf("%d", &p[i].at);
+        printf("Enter Burst Time of P%d: ", p[i].id);
+        scanf("%d", &p[i].bt);
+        printf("Enter Priority of P%d (lower = higher priority): ", p[i].id);
+        scanf("%d", &p[i].priority);
+        p[i].bt_left = p[i].bt;
+    }
+
+    int is_completed[n];
+    for(int i=0;i<n;i++) is_completed[i]=0;
+
+    while(completed != n){
+        min_priority = 1e9;
+        idx = -1;
+        for(int i=0;i<n;i++){
+            if(p[i].at <= time && is_completed[i] == 0){
+                if(p[i].priority < min_priority){
+                    min_priority = p[i].priority;
+                    idx = i;
+                }
+                else if(p[i].priority == min_priority){
+                    if(p[i].at < p[idx].at) idx = i;
+                }
+            }
+        }
+if(idx != -1){
+            p[idx].bt_left--;
+            time++;
+            if(p[idx].bt_left == 0){
+                p[idx].ct = time;
+                p[idx].tat = p[idx].ct - p[idx].at;
+                p[idx].wt = p[idx].tat - p[idx].bt;
+                is_completed[idx] = 1;
+                completed++;
+            }
+        } else {
+            time++;
+        }
+    }
+
+    float avgwt=0, avgtat=0;
+    printf("\nProcess\tAT\tBT\tPriority\tCT\tTAT\tWT\n");
+    for(int i=0;i<n;i++){
+        printf("P%d\t%d\t%d\t%d\t\t%d\t%d\t%d\n", p[i].id, p[i].at, p[i].bt, p[i].priority, p[i].ct, p[i].tat, p[i].wt);
+        avgwt += p[i].wt;
+        avgtat += p[i].tat;
+    }
+
+    printf("\nAverage Waiting Time: %.2f", avgwt/n);
+    printf("\nAverage Turnaround Time: %.2f\n", avgtat/n);
+    return 0;
+}
