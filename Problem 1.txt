@@ -1,4 +1,5 @@
 //Write a shell program to take input from user.
 
 echo "Enter the value of 1st number:-"
+
 read a
