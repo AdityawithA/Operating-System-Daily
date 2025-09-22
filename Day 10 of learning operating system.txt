@@ -83,4 +83,5 @@ The degree of multiprogramming is controlled by the Long-Term Scheduler (Job Sch
 
 👉 It decides how many processes should be admitted into the system (main memory) from the job pool, thereby directly controlling the degree of multiprogramming.
 
+
 A dispatcher is a program module in the operating system that gives control of the CPU to the process selected by the short-term scheduler, by performing context switching, switching to user mode, and jumping to the proper program location to restart execution.
