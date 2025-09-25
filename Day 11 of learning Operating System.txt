@@ -1,0 +1,173 @@
+//Day 11 of learning Operating System
+
+1. Swapping
+
+Swapping is a memory management technique used by the operating system to handle processes when the available main memory (RAM) is insufficient.
+
+Definition:
+Swapping is the process of moving a process temporarily out of the main memory into secondary storage (disk), and later bringing it back into memory for execution when needed.
+
+Key Points:
+a. In time-sharing systems, a Medium-Term Scheduler (MTS) is responsible for swapping processes in and out.
+b. Swapping helps reduce the degree of multiprogramming (number of processes in memory) when the memory is overloaded.
+c. A swapped-out process can later be swapped back in and continue execution from where it was paused.
+d. Swap-in and swap-out operations are managed by the MTS.
+e. Swapping improves process mix (balance between CPU-bound and I/O-bound processes) and ensures optimal memory usage.
+f. Swapping is essential when a process demands more memory than what is currently available in main memory.
+
+Diagram Explanation:
+The diagram shows:
+
+Processes in the Ready Queue can be swapped out to secondary storage.
+
+Swapped processes return to memory through Swap-in.
+
+Processes waiting for I/O go to the I/O waiting queue, and once done, they re-enter the CPU scheduling cycle.
+
+Important Terms:
+
+Multiprogramming: Running multiple processes in memory to increase CPU utilization.
+
+Medium-Term Scheduler (MTS): OS component that temporarily removes processes from memory to control degree of multiprogramming.
+
+Ready Queue: Queue where all ready-to-execute processes wait for CPU allocation.
+
+2. Context Switching
+
+Context switching is the backbone of multitasking in operating systems.
+
+Definition:
+Context switching is the process of saving the state of a currently running process and loading the saved state of another process so that execution can continue seamlessly.
+
+Key Points:
+a. When the CPU switches from one process to another, the OS must save the current process’s state in its Process Control Block (PCB) and restore the state of the new process.
+b. This ensures that when the old process resumes later, it continues execution from where it was paused.
+c. Context switching is considered pure overhead, because it does not perform useful work itself but is necessary for process management.
+d. Speed of context switching depends on:
+
+CPU speed
+
+Number of registers to be saved
+
+Memory speed
+
+Important Terms:
+
+Process Control Block (PCB): A data structure in the OS that stores all information about a process (state, program counter, registers, memory allocation, etc.).
+
+Overhead: Extra processing time or resources spent by the OS that does not directly contribute to user tasks.
+
+3. Orphan Process
+
+Definition:
+An orphan process is a process whose parent process has been terminated while it is still running.
+
+Key Points:
+a. Orphans occur when a parent exits before its child process finishes execution.
+b. These orphan processes are adopted by the init process (PID = 1) in UNIX/Linux systems.
+c. The init process then becomes their new parent and ensures that they terminate properly.
+
+Important Terms:
+
+Parent Process: The process that creates another process (child).
+
+Child Process: A process created by another process (parent) using a system call like fork().
+
+init Process: The first process started by the OS during booting; responsible for adopting orphan processes.
+
+4. Zombie Process / Defunct Process
+
+Definition:
+A zombie process is a process that has completed execution but still remains in the process table because its parent has not yet collected its exit status.
+
+Key Points:
+a. Zombie processes usually occur with child processes, as the parent must call the wait() system call to read the child’s exit status.
+b. Once the parent collects this status, the OS removes the child’s entry from the process table. This process is known as reaping the zombie.
+c. Zombies exist because the parent might delay the call to wait(), keeping the child’s entry in the process table longer than necessary.
+d. Until reaped, a zombie process consumes no CPU but occupies an entry in the process table.
+
+Important Terms:
+
+Process Table: A data structure maintained by the OS that contains information about all active processes.
+
+Reaping: The act of removing a zombie process after the parent process collects its exit status.
+
+Defunct Process: Another name for a zombie process.
+
+[Secondary Storage / Swap Area]
+   ^                         |
+   |   Swap-in               |  Swap-out
+   |                         v
++----------------------+   +----------------------+
+|   Partially-exec     |<--|   Main Memory (RAM)  |
+|  swapped-out procs   |   |  (Ready Queue, PCB)  |
++----------------------+   +----------------------+
+           ^                       |
+           |                       v
+           |                [CPU] -> executes process
+           |                       |
+           +-- Medium-Term Scheduler (decides swap-in/out) --+
+
+
+/* zombie_orphan.c
+   Compile: gcc -o zombie_orphan zombie_orphan.c
+   Run for zombie demo: ./zombie_orphan zombie
+   Run for orphan demo:  ./zombie_orphan orphan
+
+   Note: Requires a UNIX-like environment (Linux/Mac). Behavior depends on OS.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void zombie_demo() {
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork");
+        exit(1);
+    }
+    if (pid == 0) { // child
+        printf("[child] pid=%d parent=%d -> exiting immediately (becomes ZOMBIE until parent waits)\n",
+               getpid(), getppid());
+        exit(42); // exit with status 42
+    } else { // parent
+        printf("[parent] pid=%d child=%d -> sleeping (child will be a zombie now)\n", getpid(), pid);
+        printf("Check `ps -el | grep %d` in another terminal to see the child as Z (zombie).\n", pid);
+        sleep(10); // keep parent alive but delaying wait -> child becomes zombie
+        printf("[parent] now calling wait() to reap child\n");
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)) {
+            printf("[parent] child exited with status=%d\n", WEXITSTATUS(status));
+        }
+        printf("[parent] done\n");
+    }
+}
+
+void orphan_demo() {
+    pid_t pid = fork();
+    if (pid < 0) { perror("fork"); exit(1); }
+    if (pid == 0) { // child
+        printf("[child] pid=%d parent=%d -> sleeping longer to become orphan\n", getpid(), getppid());
+        sleep(5);
+        printf("[child] after sleep: now parent pid=%d (should be 1 if adopted by init)\n", getppid());
+        printf("[child] child exiting now\n");
+        exit(0);
+    } else { // parent
+        printf("[parent] pid=%d child=%d -> parent exiting immediately (child becomes orphan)\n", getpid(), pid);
+        exit(0);
+    }
+}
+
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s [zombie|orphan]\n", argv[0]);
+        return 1;
+    }
+    if (strcmp(argv[1], "zombie") == 0) zombie_demo();
+    else if (strcmp(argv[1], "orphan") == 0) orphan_demo();
+    else fprintf(stderr, "Unknown mode. Use 'zombie' or 'orphan'.\n");
+    return 0;
+}
