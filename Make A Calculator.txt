@@ -1,0 +1,18 @@
+//Write a program to make a calculator using shell script.
+
+echo "Enter First number:"
+read num1
+echo "Enter the second number:"
+read num2
+
+add = $((num1 + num2))
+sub = $((num1 - num2))
+mul = $((num1 * num2))
+quo = $((num1 / num2))
+rem = $((num1 % num2))
+
+echo "Addition: $add"
+echo "Subtraction: $sub"
+echo "Multiplication: $mul"
+echo "Quotient: $quo"
+echo "Reminder: $rem"

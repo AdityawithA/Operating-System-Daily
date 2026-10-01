@@ -1,0 +1,36 @@
+Write a program in c to implement zombie process.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>  // Include this header for wait()
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        // Fork failed
+        perror("fork failed");
+        exit(1);
+    }
+    else if (pid == 0) {
+        // Child process
+        printf("Child process (PID: %d) exiting...\n", getpid());
+        exit(0);  // Child exits immediately
+    }
+    else {
+        // Parent process
+        printf("Parent process (PID: %d) sleeping...\n", getpid());
+        printf("Child PID: %d\n", pid);
+
+        // Sleep to allow child to become zombie
+        printf("Check 'ps -l' in another terminal to see zombie process.\n");
+        sleep(30);  // Parent waits, child stays as zombie
+
+        printf("Parent exiting and cleaning up child...\n");
+        wait(NULL);  // Reap child
+    }
+
+    return 0;
+}

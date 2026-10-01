@@ -1,0 +1,14 @@
+//Write a shell program to define an array and print the elements of an array where the sixe is 10 and compute the sum of the numbers.
+
+numbers=(12 7 9 21 5 8 11 3 6 10)
+
+echo "Array elements are:"
+sum=0
+
+for num in "${numbers[@]}"
+do
+  echo "$num"
+  sum=$((sum + num))
+done
+
+echo "Sum of array elements: $sum"

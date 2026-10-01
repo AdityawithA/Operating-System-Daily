@@ -1,0 +1,13 @@
+//Write a program in shell script to check wheather 2 numbers are equal or not.
+
+echo "Enter first number:"
+read a
+echo "Enter second number:"
+read b
+
+if [ "$a" -eq "$b" ];
+then
+echo "The numbers are equal"
+else
+echo "The number are not equal."
+fi

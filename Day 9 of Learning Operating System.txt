@@ -1,0 +1,228 @@
+//Day 9 of learning operating ststem
+
+Process in Operating System
+1. What is a Program?
+
+A program is a set of compiled instructions written in a programming language.
+
+It resides on a storage device (like a hard disk or SSD) and is a passive entity.
+
+A program is not active by itself; it only becomes useful when it is executed.
+
+👉 Example: A .exe file stored in your system is a program.
+
+2. What is a Process?
+
+A process is a program in execution.
+
+It is an active entity that uses CPU time, memory, files, and I/O devices.
+
+The process is created and managed by the Operating System (OS).
+
+Each process has its own memory space and Process Control Block (PCB).
+
+👉 Example: When you double-click on Chrome, the Chrome program becomes a process.
+
+3. How OS Creates a Process?
+
+The operating system converts a program into a process by following these steps:
+
+Load the program and static data into memory
+
+OS loads the executable code and initialized variables into memory.
+
+Allocate runtime stack
+
+Stack is created to store local variables, function arguments, and return addresses.
+
+Heap memory allocation
+
+Heap space is allocated for dynamically allocated variables (like malloc in C, new in Java).
+
+I/O tasks initialization
+
+OS allocates I/O resources such as files, devices, and network connections.
+
+OS hands control to main() function
+
+Execution starts from the entry point (e.g., main() in C/C++ programs).
+
+4. Architecture of a Process
+
+A process is divided into four main sections of memory:
+
+Stack
+
+Contains local variables, function arguments, and return values.
+
+Grows and shrinks dynamically during function calls.
+
+Heap
+
+Used for dynamic memory allocation.
+
+Managed by the programmer (malloc/free in C, new/delete in C++, garbage collector in Java).
+
+Data Section
+
+Stores global variables and static variables.
+
+Divided into initialized and uninitialized (BSS) segments.
+
+Text Section (Code Segment)
+
+Contains the actual compiled program instructions.
+
+Read-only to prevent accidental modification of instructions.
+
+5. Attributes of a Process
+
+Every process has specific attributes that allow the OS to manage and control it:
+
+a. Process Identifier (PID)
+
+A unique number assigned to each process for identification.
+
+b. Process Table
+
+The OS maintains a process table to keep track of all active processes.
+
+Each entry in the process table is a Process Control Block (PCB).
+
+c. Process Control Block (PCB)
+
+A data structure that stores important information about a process:
+
+Process ID (PID)
+
+Program Counter (PC) – next instruction to execute
+
+Process State – new, ready, running, waiting, or terminated
+
+CPU Registers – values of registers when process is paused
+
+Memory Information – base and limit registers
+
+Accounting Information – CPU usage, time limits
+
+I/O Status Information – list of I/O devices allocated to the process
+1. Process ID
+
+A unique number assigned by the operating system to identify each process.
+
+Similar to a roll number in school – every student has one, even if names are same.
+
+Helps the OS distinguish between multiple processes running at the same time.
+
+2. Program Counter (PC)
+
+Stores the address of the next instruction that the process will execute.
+
+If a process is interrupted (e.g., context switching), the current PC value is saved in the PCB.
+
+When the process resumes, the PC ensures execution continues from the correct instruction, not from the beginning.
+
+3. Process State
+
+Indicates the current status of the process.
+
+Possible states:
+
+New → Process is being created.
+
+Ready → Waiting to be assigned to the CPU.
+
+Running → Currently executing on the CPU.
+
+Waiting/Blocked → Waiting for an event (I/O completion, resource).
+
+Terminated → Process finished execution.
+
+4. Priority
+
+Defines the importance of a process.
+
+The CPU scheduler uses this to decide which process gets CPU first.
+
+Example: An antivirus scan may run at low priority, while a video call app runs at high priority.
+
+5. Registers
+
+Registers are small, high-speed storage locations inside the CPU.
+
+When a process runs, it uses registers like:
+
+Accumulator (for arithmetic/logic).
+
+Index registers (for memory addressing).
+
+Stack pointer (for function calls and memory stack).
+
+General-purpose registers.
+
+During context switching:
+
+The current register values are saved into the PCB.
+
+When the process resumes, these values are restored from the PCB into CPU registers.
+✅ This ensures the process continues execution smoothly.
+
+6. List of Open Files
+
+Keeps track of all files that a process is currently using.
+
+Example: A text editor like MS Word may have multiple .docx files open – the PCB records them.
+
+Helps in resource management and proper file closing if process terminates.
+
+7. List of Open Devices
+
+Tracks the I/O devices assigned to the process.
+
+Example:
+
+A music player process may have speakers as an open device.
+
+A print process may have a printer linked.
+
+This ensures that device access is properly managed and released when the process ends.
+📌 Registers in the PCB 
+
+👉 As your provided text says:
+
+When a process is running and its time slice expires (or if it is interrupted):
+
+The current values of registers are saved into the PCB.
+
+The process is swapped out of CPU.
+
+When the process is scheduled again, the OS loads those register values back into the CPU.
+
+⚡ This mechanism allows context switching → where the CPU can switch between processes without losing their execution states.
+
+Example:
+
+Process A is running and has AX = 5, BX = 10 in CPU registers.
+
+Suddenly, the OS decides to switch to Process B.
+
+OS saves A’s registers into A’s PCB.
+
+CPU loads B’s register values from B’s PCB.
+
+Later, when Process A resumes, its registers (AX = 5, BX = 10) are restored back – so it continues without error.
++-----------------------+---------------------------------------------+
+|      Process ID       | Unique identifier                           |
++-----------------------+---------------------------------------------+
+| Program Counter (PC)  | Next instruction address of the program     |
++-----------------------+---------------------------------------------+
+|    Process State      | Stores process state                        |
++-----------------------+---------------------------------------------+
+|       Priority        | Based on priority a process gets CPU time   |
++-----------------------+---------------------------------------------+
+|       Registers       |                                             |
++-----------------------+---------------------------------------------+
+|  List of open files   |                                             |
++-----------------------+---------------------------------------------+
+| List of open devices  |                                             |
++-----------------------+---------------------------------------------+

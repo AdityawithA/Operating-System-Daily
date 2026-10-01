@@ -1,0 +1,14 @@
+//Write a program  to find out the sum of the number between 2 ranges.
+
+echo "Enter the upper bound:"
+read start
+echo "Enter the lower bound:"
+read stop
+sum = 0
+current = $start
+while [ "$current" -le "$stop" ]
+do
+echo "$current"
+sum = $((sum + current))
+current = $((current +1))
+done

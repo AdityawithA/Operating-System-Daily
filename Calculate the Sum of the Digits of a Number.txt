@@ -1,0 +1,13 @@
+//Write a program to calculate the sum of the digits of a number.
+
+echo "Enter the number:"
+read num
+sum = 0
+while [ "$sum" -gt 0 ]
+do 
+digit = $((num % 10))
+num = $((sum + digit))
+sum = $((num / 10))
+done
+
+echo "Sum of the digits is: $sum"

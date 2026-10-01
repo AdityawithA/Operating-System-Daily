@@ -1,0 +1,11 @@
+//Write a shell program to print all number between 2 ranges.
+
+echo "Enter the upper bound:"
+read start
+echo "Enter the lower bound:"
+read stop
+while [ "$start" -le "$stop" ]
+do
+echo "$start"
+start = $((start+1))
+done

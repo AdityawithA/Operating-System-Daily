@@ -1,0 +1,10 @@
+//Write a shell script to display the content of any file in command prompt.
+
+read -p 'Enter the file name to display:" filename
+if [ -f "$filename" ];then
+echo ""
+echo "Content of $filename"
+cat "$filename"
+else
+echo "File '$filename' does not exist!"
+fi
